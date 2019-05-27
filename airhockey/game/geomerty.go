@@ -2,6 +2,26 @@ package game
 
 import "math"
 
+
+type Vec2d struct {
+	X float64 `json:"x"`
+	Y float64 `json:"y"`
+}
+
+func scale(v Vec2d, s float64) Vec2d {
+	return Vec2d{
+		X: v.X * s,
+		Y: v.Y * s,
+	}
+}
+
+func add(v1, v2 Vec2d) Vec2d  {
+	return Vec2d{
+		X: v1.X + v2.X,
+		Y: v1.Y + v2.Y,
+	}
+}
+
 func normalizeMallet1Pos(pos Vec2d) Vec2d {
 	return Vec2d{
 		X:clamp(pos.X, -0.5 + malletRadius, 0.5 + malletRadius),

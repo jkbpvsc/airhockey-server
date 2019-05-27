@@ -6,31 +6,20 @@ import (
 	"time"
 )
 
-type Vec2d struct {
-	X float64 `json:"x"`
-	Y float64 `json:"y"`
-}
-
-func scale(v Vec2d, s float64) Vec2d {
-	return Vec2d{
-		X: v.X * s,
-		Y: v.Y * s,
-	}
-}
-
-func add(v1, v2 Vec2d) Vec2d  {
-	return Vec2d{
-		X: v1.X + v2.X,
-		Y: v1.Y + v2.Y,
-	}
-}
-
 type State struct {
 	mallet1Pos, mallet2Pos, puckVec, puckPos Vec2d
 }
 
-const malletRadius = 0.08
-const puckRadius = 0.06
+const (
+	malletRadius = 0.08
+	puckRadius = 0.06
+	leftBound = -0.5
+	rightBound = 0.5
+	farBound = -0.8
+	nearBound = 0.8
+	fps = 60
+	interval = time.Second / fps
+)
 
 var state *State
 
@@ -58,11 +47,6 @@ func GetGameState() gin.H  {
 	}
 }
 
-const leftBound float64 = -0.5
-const rightBound float64 = 0.5
-const farBound float64 = -0.8
-const nearBound float64 = 0.8
-
 func cycle()  {
 	state.puckVec = scale(state.puckVec, 0.99)
 	state.puckPos = add(state.puckPos, state.puckVec)
@@ -86,8 +70,6 @@ func cycle()  {
 	}
 }
 
-const fps = 60
-const interval = time.Second / fps
 func Loop()  {
 	for {
 		cycle()
