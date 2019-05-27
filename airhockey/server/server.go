@@ -16,6 +16,9 @@ func Start() {
 func setupRouter() {
 	r := gin.New()
 	r.GET("game", gameUpdateHandler)
+	r.GET("/", func(context *gin.Context) {
+		context.String(200, "OK")
+	})
 
 	r.Run()
 }
